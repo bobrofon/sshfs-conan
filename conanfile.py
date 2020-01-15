@@ -23,7 +23,6 @@ class SshfsConan(ConanFile):
     exports = 'tools/*'  # for import tools module
 
     cross_file_name = 'cross_file.txt'
-    meson_args = []
 
     def source(self):
         git_tag = '{}-{}'.format(self.name, self.version)
@@ -45,13 +44,15 @@ class SshfsConan(ConanFile):
         if not self.options.shared:
             append_value(defs, 'c_link_args', '-static')
 
+        args = []
+
         if tools.cross_building(self.settings):
             meson_tools.write_cross_file(self.cross_file_name, self)
-            self.meson_args += ['--cross-file', self.cross_file_name]
+            args += ['--cross-file', self.cross_file_name]
 
         meson = Meson(self)
         meson.configure(source_folder='sshfs', build_folder='build',
-                        defs=defs, args=self.meson_args)
+                        defs=defs, args=args)
         meson.build()
 
     def package(self):
