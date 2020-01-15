@@ -38,20 +38,6 @@ class SshfsConan(ConanFile):
         tools.replace_in_file('sshfs/meson.build',
                               "dependency('gthread-2.0')",
                               "dependency('glib')")
-        # TODO: remove
-        tools.replace_in_file('sshfs/meson.build', "subdir('test')", '')
-
-        # TODO: remove
-        # disable osx frameworks support in conan pkgconfig generator
-        try:
-            tools.replace_in_file(
-                'glib.pc',
-                ' -framework Foundation'
-                ' -framework CoreServices'
-                ' -framework CoreFoundation',
-                '')
-        except:
-            pass
 
     def build(self):
         defs = meson_tools.common_flags(self.settings)
