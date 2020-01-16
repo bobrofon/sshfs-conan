@@ -24,6 +24,8 @@ class SshfsConan(ConanFile):
 
     cross_file_name = 'cross_file.txt'
 
+    meson = None
+
     def source(self):
         git_tag = '{}-{}'.format(self.name, self.version)
 
@@ -50,10 +52,10 @@ class SshfsConan(ConanFile):
             meson_tools.write_cross_file(self.cross_file_name, self)
             args += ['--cross-file', self.cross_file_name]
 
-        meson = Meson(self)
-        meson.configure(source_folder='sshfs', build_folder='build',
-                        defs=defs, args=args)
-        meson.build()
+        self.meson = Meson(self)
+        self.meson.configure(source_folder='sshfs', build_folder='build',
+                             defs=defs, args=args)
+        self.meson.build()
 
     def package(self):
-        self.copy('build/sshfs', dst='bin', keep_path=False)
+        self.meson.install()
