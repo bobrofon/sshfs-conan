@@ -20,7 +20,7 @@ class SshfsConan(ConanFile):
     generators = 'pkg_config'
     build_requires = 'meson_installer/0.51.0@bincrafters/stable'
 
-    exports = 'tools/*'  # for import tools module
+    exports = 'tools/*.py'  # for import tools module
 
     cross_file_name = 'cross_file.txt'
 
