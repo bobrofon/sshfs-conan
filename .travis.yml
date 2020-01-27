@@ -28,6 +28,15 @@ matrix:
       - <<: *linux
         env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=conanio/clang8
 
+      - <<: *linux
+        env: CONAN_GCC_VERSIONS=8 CONAN_DOCKER_IMAGE=conanio/gcc8-x86 CONAN_ARCHS=x86
+
+      - <<: *linux
+        env: CONAN_GCC_VERSIONS=8 CONAN_DOCKER_IMAGE=conanio/gcc8-armv7 CONAN_ARCHS=armv7
+
+      - <<: *linux
+        env: CONAN_GCC_VERSIONS=8 CONAN_DOCKER_IMAGE=conanio/gcc8-armv8 CONAN_ARCHS=armv8
+
 install:
   - chmod +x .travis/install.sh
   - ./.travis/install.sh

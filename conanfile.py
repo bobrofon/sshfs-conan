@@ -52,9 +52,15 @@ class SshfsConan(ConanFile):
             meson_tools.write_cross_file(self.cross_file_name, self)
             args += ['--cross-file', self.cross_file_name]
 
+        # there is no usage of native compiler but we had to trick
+        # meson's sanity check somehow
+        meson_env = (meson_tools.with_fake_compiler()
+                     if tools.cross_building(self.settings)
+                     else tools.no_op())
         self.meson = Meson(self)
-        self.meson.configure(source_folder='sshfs', build_folder='build',
-                             defs=defs, args=args)
+        with meson_env:
+            self.meson.configure(source_folder='sshfs', build_folder='build',
+                                 defs=defs, args=args)
         self.meson.build()
 
     def package(self):
