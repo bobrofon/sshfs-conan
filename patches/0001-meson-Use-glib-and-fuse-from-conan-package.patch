@@ -1,0 +1,26 @@
+From eddd0d8f1ff915de31a397a82971ce7e2ae779e3 Mon Sep 17 00:00:00 2001
+From: Sergey Bobrenok <bobrofon@yandex-team.ru>
+Date: Sun, 5 Apr 2020 11:41:40 +0300
+Subject: [PATCH 1/1] meson: Use glib and fuse from conan package
+
+---
+ meson.build | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index f6bbe51..369f463 100644
+--- a/meson.build
++++ b/meson.build
+@@ -45,8 +45,7 @@ configure_file(output: 'config.h',
+                configuration : cfg)
+ 
+ sshfs_deps = [ dependency('fuse3', version: '>= 3.1.0'),
+-               dependency('glib-2.0'),
+-               dependency('gthread-2.0') ]
++               dependency('glib')]
+ 
+ executable('sshfs', sshfs_sources,
+            include_directories: include_dirs,
+-- 
+2.26.0
+
